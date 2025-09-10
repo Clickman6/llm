@@ -20,7 +20,7 @@ tasks:
       - task: docker-compose
         vars:
           COMPOSE: up -d
-      - task: status
+      # - task: status
 
   docker-pull:
     desc: Загрузить образы
@@ -83,14 +83,3 @@ tasks:
     cmds:
       - task: optimize-clear
       - cmd: docker compose down -v --remove-orphans
-
-  status:
-    desc: Статус приложения
-    cmds:
-      - echo -e "\033[1;36m========================================\033[0m"
-      - echo -e "\033[1;32m✔ Application is ready!\033[0m"
-      - echo -e "\033[1;36m========================================\033[0m"
-      # - echo ""
-      - echo -e "\033[1;33mLangfuse:\033[0m          http://localhost:3000"
-      - echo -e "\033[1;36m========================================\033[0m"
-    silent: true

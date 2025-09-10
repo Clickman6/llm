@@ -1,4 +1,3 @@
-import string
 from config import CHROMA_HOST, CHROMA_PORT
 
 from datasets import load_dataset

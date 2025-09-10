@@ -12,3 +12,4 @@
 .project
 .settings
 Thumbs.db
+**/__pycache__

@@ -6,12 +6,6 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-from langfuse import Langfuse
-from langfuse.langchain import CallbackHandler
-
-langfuse = Langfuse(public_key=LANGFUSE_PUBLIC_KEY, secret_key=LANGFUSE_SECRET_KEY, host=LANGFUSE_HOST)
-langfuse_handler = CallbackHandler()
-
 print("Инициализация LLM...")
 llm = OllamaLLM(model='llama3.1:8b', base_url=f"{OLLAMA_URL}", temperature=0.15, num_predict=1024, reasoning=False)
 
@@ -63,7 +57,7 @@ def ask(question: str):
     
     print("=" * 100)
     print('Ответ модели:')
-    for chunk in rag_chain.stream({"input": question, "chat_history": chat_history}, config={"callbacks":[langfuse_handler]}):
+    for chunk in rag_chain.stream({"input": question, "chat_history": chat_history}):
         if 'answer' in chunk:
             print(chunk['answer'], end='', flush=True)
             result['answer'] += chunk['answer']
@@ -75,11 +69,6 @@ def ask(question: str):
 
 def main():
     questions = [
-        # 'Какие есть боссы в Террарии?',
-        # 'Какой финальный босс?',
-        # 'И как его победить?',
-        # 'Какую броню на него использовать?',
-
         'What bosses are there in Terraria?',
         'What is the final boss?',
         'And how to defeat it?',
