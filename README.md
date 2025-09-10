@@ -16,6 +16,7 @@ P.P.S. Сначала RAG был реализован реализован на 
 - Python 3.11
 - Ollama
 - Сhroma - векторная БД для хранения Dataset с Terraria Wiki
+- Langchain
 - Langfuse - требует для работы Postgres, Minio, Clickhouse, Redis
 
 
