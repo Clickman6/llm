@@ -1,0 +1,9 @@
+langchain
+langchain-ollama
+langchain-huggingface
+langchain-chroma
+sentence-transformers
+tiktoken
+langfuse
+datasets
+python-dotenv

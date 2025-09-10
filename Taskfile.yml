@@ -1,0 +1,96 @@
+version: "3"
+
+dotenv: [ '.env' ]
+
+tasks:
+  docker-compose:
+    internal: true
+    cmd: docker compose {{.COMPOSE}}
+
+  init:
+    desc: Первый запуск
+    cmds:
+      - task: pull
+      - task: up
+
+  docker-up:
+    desc: Запустить контейнеры
+    aliases: [ up ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: up -d
+      - task: status
+
+  docker-pull:
+    desc: Загрузить образы
+    aliases: [ pull ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: pull
+
+  docker-build:
+    desc: Build образов
+    aliases: [ build ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: build
+
+  docker-down:
+    desc: Остановить контейнеры
+    aliases: [ down ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: down
+
+  docker-restart:
+    desc: Перезапустить все контейнеры
+    aliases: [ restart ]
+    cmds:
+      - task: down
+      - task: up
+
+  docker-pause:
+    desc: Пауза контейнеров
+    aliases: [ pause ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: pause
+
+  docker-unpause:
+    desc: Пуск контейнеров
+    aliases: [ unpause, play ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: unpause
+
+  docker-ps:
+    desc: Список контейнеров
+    aliases: [ ps ]
+    cmds:
+      - task: docker-compose
+        vars:
+          COMPOSE: ps
+
+  docker-clean:
+    desc: Удалить volumes и кэш laravel
+    aliases: [ clean ]
+    cmds:
+      - task: optimize-clear
+      - cmd: docker compose down -v --remove-orphans
+
+  status:
+    desc: Статус приложения
+    cmds:
+      - echo -e "\033[1;36m========================================\033[0m"
+      - echo -e "\033[1;32m✔ Application is ready!\033[0m"
+      - echo -e "\033[1;36m========================================\033[0m"
+      # - echo ""
+      - echo -e "\033[1;33mLangfuse:\033[0m          http://localhost:3000"
+      - echo -e "\033[1;36m========================================\033[0m"
+    silent: true
